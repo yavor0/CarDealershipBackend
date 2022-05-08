@@ -19,6 +19,7 @@ class Car(models.Model):
     # image5 = models.ImageField(upload_to='images', blank=True)
 
     mileage = models.IntegerField(blank=True, null=True)
+
     TRANSMISSION = (
                 ('Manual','Manual'),
                 ('Automatic','Automatic')
@@ -32,8 +33,10 @@ class Car(models.Model):
     fuel = models.FloatField()
     price = models.IntegerField()
     description = models.TextField(blank=True, null=True)
-    date_added = models.DateField(auto_now=True)
+    date_added = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["date_added"]
 
     def __str__(self):
         return self.make
-
