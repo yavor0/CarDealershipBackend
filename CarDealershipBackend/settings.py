@@ -90,8 +90,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cars',
         'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': '123456y'
+        'USER': os.environ.get('MYSQL_USERNAME'), 
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD')
     }
 }
 
