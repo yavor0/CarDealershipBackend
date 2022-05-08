@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 import datetime
 
 # Create your models here.
@@ -18,7 +19,7 @@ class Car(models.Model):
     # image4 = models.ImageField(upload_to='images', blank=True)
     # image5 = models.ImageField(upload_to='images', blank=True)
 
-    mileage = models.IntegerField(blank=True, null=True)
+    mileage = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1)])
 
     TRANSMISSION = (
                 ('Manual','Manual'),
@@ -29,14 +30,14 @@ class Car(models.Model):
     type = models.CharField(max_length=50, null=True)
     YEAR_CHOICES = [(r,r) for r in range(1980, datetime.date.today().year+1)]
     year = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
-    power = models.IntegerField()
-    fuel = models.FloatField()
-    price = models.IntegerField()
+    power = models.IntegerField(validators=[MinValueValidator(1)])
+    fuel = models.FloatField(validators=[MinValueValidator(0)])
+    price = models.IntegerField(validators=[MinValueValidator(1)])
     description = models.TextField(blank=True, null=True)
     date_added = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["date_added"]
+        ordering = ["-date_added"]
 
     def __str__(self):
         return self.make
