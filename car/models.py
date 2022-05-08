@@ -25,6 +25,7 @@ class Car(models.Model):
     )
 
     transmission = models.CharField(max_length=50, choices=TRANSMISSION)
+    type = models.CharField(max_length=50, null=True)
     YEAR_CHOICES = [(r,r) for r in range(1980, datetime.date.today().year+1)]
     year = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
     power = models.IntegerField()

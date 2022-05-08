@@ -10,3 +10,5 @@ class CarSerializer(serializers.ModelSerializer):
     # model = serializers.CharField(max_length=100)
     # mileage = serializers.IntegerField()
     # price = serializers.IntegerField()
+
+
