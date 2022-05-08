@@ -34,5 +34,5 @@ class Car(models.Model):
     _current_date = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.brand
+        return self.make
 
