@@ -41,3 +41,13 @@ class Car(models.Model):
 
     def __str__(self):
         return self.make
+
+
+class CarImage(models.Model):
+    Car = models.ForeignKey(
+        Car, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(
+        upload_to='dealership/images') # validators=[validate_file_size]
+
+    # def __str__(self):
+    #     return self.image.__str__()
