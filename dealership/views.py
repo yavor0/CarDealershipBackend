@@ -7,25 +7,25 @@ from .models import Car
 from .serializers import CarSerializer
 
 
-# class CarList(generics.ListAPIView):
-#     queryset = Car.objects.all()
-#     serializer = CarSerializer(queryset,many=True)
-
-# class CarDetail(generics.RetrieveAPIView):
-#     queryset = Car.objects.all()
-#     serializer = CarSerializer(queryset,many=True)
-
-
-
-@api_view()
-def car_list(request):
+class CarList(generics.ListAPIView):
     queryset = Car.objects.all()
-    serializer = CarSerializer(queryset,many=True)
-    return Response(serializer.data)
+    serializer_class = CarSerializer
+
+class CarDetail(generics.RetrieveAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
 
 
-@api_view()
-def car_detail(request, id):
-    car = get_object_or_404(Car,pk=id)
-    serializer = CarSerializer(car)
-    return Response(serializer.data)
+
+# @api_view()
+# def car_list(request):
+#     queryset = Car.objects.all()
+#     serializer = CarSerializer(queryset,many=True)
+#     return Response(serializer.data)
+
+
+# @api_view()
+# def car_detail(request, id):
+#     car = get_object_or_404(Car,pk=id)
+#     serializer = CarSerializer(car)
+#     return Response(serializer.data)
