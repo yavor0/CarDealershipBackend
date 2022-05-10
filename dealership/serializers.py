@@ -8,11 +8,22 @@ class CarImageSerializer(serializers.ModelSerializer):
         fields = ['id', 'image']
 
 
-class CarSerializer(serializers.ModelSerializer):
-    images = CarImageSerializer(many=True)
+class SimpleCarSerializer(serializers.ModelSerializer):
+    #TODO: images = serializers.StringRelatedField(many=True)
+    images = CarImageSerializer(read_only=True,many=True)
     class Meta:
         model = Car
-        fields = ['id', 'make', 'model', 'mileage', 'price', 'images']
+        fields = ['id', 'make', 'model', 'mileage', 'price', 'year','images']
+
+
+
+class CarSerializer(serializers.ModelSerializer):
+    images = CarImageSerializer(read_only=True,many=True)
+    class Meta:
+        model = Car
+        fields = ['id', 'make', 'model', 'mileage', 'price', 'year', 'power', 'fuel', 'price', 'description', 'date_added', 'images']
+        
+
 
 
     # id = serializers.IntegerField()

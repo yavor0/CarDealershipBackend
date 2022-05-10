@@ -4,13 +4,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics
 from .models import Car
-from .serializers import CarSerializer
+from .serializers import CarSerializer, SimpleCarSerializer
 
 # TODO: only show urls to each image when inspecting a car detail page, otherwise - only show the first image?
 
 class CarList(generics.ListAPIView):
     queryset = Car.objects.prefetch_related('images').all()
-    serializer_class = CarSerializer
+    serializer_class = SimpleCarSerializer
 
 # Fix this
 class CarDetail(generics.RetrieveAPIView):

@@ -25,9 +25,21 @@ class Car(models.Model):
                 ('Manual','Manual'),
                 ('Automatic','Automatic')
     )
+    CAR_TYPES = (
+        ('SUV', 'SUV'),
+        ('Hatchback', 'Hatchback'),
+        ('Crossover', 'Crossover'),
+        ('Convertible', 'Convertible'),
+        ('Sedan', 'Sedan'),
+        ('Sports Car', 'Sports Car'),
+        ('Coupe', 'Coupe'),
+        ('Minivan', 'Minivan'),
+        ('Station Wagon', 'Station Wagon'),
+        ('Pickup Truck', 'Pickup Truck'),
+    )
 
-    transmission = models.CharField(max_length=50, choices=TRANSMISSION)
-    type = models.CharField(max_length=50, null=True)
+    transmission = models.CharField(max_length=50, choices=TRANSMISSION)    
+    type = models.CharField(max_length=50, choices=CAR_TYPES)
     YEAR_CHOICES = [(r,r) for r in range(1980, datetime.date.today().year+1)]
     year = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
     power = models.IntegerField(validators=[MinValueValidator(1)])
@@ -50,4 +62,4 @@ class CarImage(models.Model):
         upload_to='dealership/images') # validators=[validate_file_size]
 
     # def __str__(self):
-    #     return self.image.__str__()
+    #     return self.image.url
