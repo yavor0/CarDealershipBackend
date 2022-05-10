@@ -7,7 +7,7 @@
 4. To run: `pipenv run python manage.py runserver`
  
  # Supported endpoints
- `/dealership/cars` - information for all cars
+ `/dealership/cars` - information for all cars\n
  `/dealership/cars/<id>` - information for a specific car by its id
  # In production:
  Car review endpoint
