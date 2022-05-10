@@ -10,4 +10,4 @@
  `/dealership/cars` - information for all cars\
  `/dealership/cars/<id>` - information for a specific car by its id
  # In development:
- Car review endpoint
+ Car evaluation endpoint
