@@ -3,22 +3,9 @@ from django.core.validators import MinValueValidator
 import datetime
 
 # Create your models here.
-class Car(models.Model):
+class CarModel(models.Model):
     make = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
-
-    # CATEGORY = (
-    #         ('New','New'),
-    #         ('Used','Used')
-    #     )
-    # category = models.CharField(max_length=50, choices=CATEGORY)
-    # image_main = models.ImageField(upload_to='images')
-    # image1 = models.ImageField(upload_to='images', blank=True)
-    # image2 = models.ImageField(upload_to='images', blank=True)
-    # image3 = models.ImageField(upload_to='images', blank=True)
-    # image4 = models.ImageField(upload_to='images', blank=True)
-    # image5 = models.ImageField(upload_to='images', blank=True)
-
     mileage = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1)])
 
     TRANSMISSION = (
@@ -46,14 +33,19 @@ class Car(models.Model):
     fuel = models.FloatField(validators=[MinValueValidator(0)])
     price = models.IntegerField(validators=[MinValueValidator(1)])
     description = models.TextField(blank=True, null=True)
-    date_added = models.DateTimeField(auto_now=True)
-
+    
     class Meta:
-        ordering = ["-date_added"]
+        abstract=True
 
     def __str__(self):
         return self.make
 
+
+
+class Car(CarModel):
+    date_added = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ["-date_added"]
 
 class CarImage(models.Model):
     Car = models.ForeignKey(
@@ -63,3 +55,11 @@ class CarImage(models.Model):
 
     # def __str__(self):
     #     return self.image.url
+
+
+class CarEvaluation(CarModel):
+    email = models.EmailField(max_length=254)
+    phone = models.CharField(max_length=12)
+    date_submitted = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ["-date_submitted"]
