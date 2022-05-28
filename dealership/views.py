@@ -3,8 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics
-from .models import Car
-from .serializers import CarSerializer, SimpleCarSerializer
+from .models import Car, CarEvaluation
+from .serializers import CarSerializer, SimpleCarSerializer, CarEvaluationSerializer
 
 # TODO: only show urls to each image when inspecting a car detail page, otherwise - only show the first image?
 
@@ -17,17 +17,6 @@ class CarDetail(generics.RetrieveAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
-
-
-# @api_view()
-# def car_list(request):
-#     queryset = Car.objects.all()
-#     serializer = CarSerializer(queryset,many=True)
-#     return Response(serializer.data)
-
-
-# @api_view()
-# def car_detail(request, id):
-#     car = get_object_or_404(Car,pk=id)
-#     serializer = CarSerializer(car)
-#     return Response(serializer.data)
+class CarEvaluate(generics.CreateAPIView):
+    serializer_class = CarEvaluationSerializer
+    

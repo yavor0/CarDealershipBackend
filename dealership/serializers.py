@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Car, CarImage
+from .models import Car, CarImage, CarEvaluation
 
 
 class CarImageSerializer(serializers.ModelSerializer):
@@ -21,9 +21,13 @@ class CarSerializer(serializers.ModelSerializer):
     images = CarImageSerializer(read_only=True,many=True)
     class Meta:
         model = Car
-        fields = ['id', 'make', 'model', 'mileage', 'price', 'year', 'power', 'fuel', 'price', 'description', 'date_added', 'images']
+        fields = ['id', 'make', 'model', 'mileage', 'price', 'year', 'power', 'fuel', 'description', 'date_added', 'images']
         
-
+class CarEvaluationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarEvaluation
+        fields = ['id', 'email', 'phone', 'make', 'model', 'mileage', 'price', 'year', 'power', 'fuel', 'description']
+        
 
 
     # id = serializers.IntegerField()
