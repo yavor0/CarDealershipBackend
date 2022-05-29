@@ -7,8 +7,6 @@ from rest_framework import status
 from .models import Car, CarEvaluation
 from .serializers import CarSerializer, SimpleCarSerializer, CarEvaluationSerializer
 from django.core.mail import send_mail
-import threading
-import time
 # TODO: only show urls to each image when inspecting a car detail page, otherwise - only show the first image?
 
 class CarList(generics.ListAPIView):
