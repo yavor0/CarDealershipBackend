@@ -1,5 +1,5 @@
 # Instructions
-1. Add mysql login information in user environment variables. There has to be one `MYSQL_USERNAME` и `MYSQL_PASSWORD` variable with the correct values respectively. 
+1. Add mysql login information in user environment variables. There has to be one `MYSQL_USERNAME` and `MYSQL_PASSWORD` variable with the correct values respectively. 
 2. Create a database called `dealership` (**lowercase**)
 3. Run these commands in the folder with `Pipfile`:\
  -- `pipenv install`
