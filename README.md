@@ -9,5 +9,6 @@
  # Supported endpoints
  `/dealership/cars` - information for all cars\
  `/dealership/cars/<id>` - information for a specific car by its id
+
  # In development:
- Car evaluation endpoint
+ `/dealership/evaluate` - add options for users to sell their cars to us
