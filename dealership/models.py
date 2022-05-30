@@ -27,7 +27,16 @@ class CarModel(models.Model):
         ('Хечбек', 'Хечбек'),
     )
 
-    transmission = models.CharField(max_length=50, choices=TRANSMISSION)    
+    ENGINE_TYPES = (
+        ('Бензинов', 'Бензинов'),
+        ('Дизелов', 'Дизелов'),
+        ('Електрически', 'Електрически'),
+        ('Хибриден', 'Хибриден')
+    )
+
+
+    transmission = models.CharField(max_length=50, choices=TRANSMISSION)
+    engine_type = models.CharField(max_length=50, choices=ENGINE_TYPES)
     type = models.CharField(max_length=50, choices=CAR_TYPES)
     YEAR_CHOICES = [(r,r) for r in range(1980, datetime.date.today().year+1)]
     year = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
