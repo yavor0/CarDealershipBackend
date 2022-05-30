@@ -5,7 +5,8 @@
  -- `pipenv install`\
  -- `pipenv run python manage.py migrate`
 4. To run the backend: `pipenv run python manage.py runserver`
- 
+
+(**Optional**) To create a django admin account run: `pipenv run python manage.py createsuperuser`
  # Supported endpoints
  `/dealership/cars` - information for all cars\
  `/dealership/cars/<id>` - information for a specific car by its id
