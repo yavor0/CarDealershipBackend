@@ -4,10 +4,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from thefuzz import process
 from thefuzz import fuzz
 import random
 import os
+import time
 #TODO: FIX NAMING
 print("------------------------------------------------------------------\n")
 
@@ -20,6 +23,10 @@ class MobileUploader():
         chrome_options.add_argument(r"user-data-dir=C:\Users\Yavor\Desktop\CarDealershipBackend\mobile_upload\user_data")
         # -------------------------------------------
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+        
+        self.dealership_location_region = 'София' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
+        self.dealership_location_city = 'гр. София' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
+        self.dealership_phone_number = '0878786309' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
 
     def fill_car_make(self, car_make):
         all_car_makes_element = self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f5"]')
@@ -71,17 +78,53 @@ class MobileUploader():
         dropdown_with_years.select_by_value(str(year))
         # --------------------------------------
 
+    def fill_mileage(self, mileage):
+        self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f16"]').send_keys(mileage)
+
+    def fill_location(self):
+        all_regions_element = self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f18"]')
+        dropdown_with_regions = Select(all_regions_element)
+        dropdown_with_regions.select_by_value(self.dealership_location_region)
+
+        # Wait for the page to reload
+        all_cities_element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@class="sw145new"][@name="f19"]')))
+
+        dropdown_with_cities = Select(all_cities_element)
+        dropdown_with_cities.select_by_value(self.dealership_location_city)
+
+    def fill_phone_number(self):
+        self.driver.find_element(by=By.XPATH, value='//*[@class="sw150new"][@name="f22"]').send_keys(self.dealership_phone_number)
+
+
+    def get_message_key(self):
+        return input("Enter message key: ")
+
     def run(self, car_make, car_model):
+        '''
+        Harcodings will be fixed later
+        '''
         self.driver.get("https://www.mobile.bg/pcgi/mobile.cgi?pubtype=1&act=1")
+
+        # ------------Stage 1------------
         self.fill_car_make(my_car_make)
         self.fill_car_model(my_car_model)
-        self.fill_engine_type('Бензинов') # this will be fixed later
-        self.fill_horse_power('123') # this will be fixed later
-        self.fill_transmission_type('Полуавтоматична') # this will be fixed later
-        self.fill_category("Ван") # this will be fixed later
-        self.fill_price(12333) # this will be fixed later
-        self.fill_year(2004) # this will be fixed later
+        self.fill_engine_type('Бензинов') 
+        self.fill_horse_power('123')
+        self.fill_transmission_type('Полуавтоматична')
+        self.fill_category("Ван")
+        self.fill_price(12333)
+        self.fill_year(2004)
+        self.fill_mileage(100000)
+        self.fill_location()
+        self.fill_location()
+        self.fill_phone_number()
+        # -------------------------------
 
+
+        # ------------Stage 2------------
+        # self.driver.execute_script("document.getElementById('pubButton').click()")
+        # message_key = self.get_message_key()
+        # print(message_key)
 
 my_car_make = "Alfa Romeo"
 my_car_model = "164"
