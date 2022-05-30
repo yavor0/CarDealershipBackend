@@ -11,6 +11,9 @@ django-rest-framework = "*"
 django-cors-headers = "*"
 pillow = "*"
 django-braces = "*"
+selenium = "*"
+webdriver-manager = "*"
+thefuzz = "*"
 
 [dev-packages]
 
