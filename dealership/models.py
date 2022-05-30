@@ -9,20 +9,21 @@ class CarModel(models.Model):
     mileage = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1)])
 
     TRANSMISSION = (
-                ('Manual','Manual'),
-                ('Automatic','Automatic')
+                ('Ръчна','Ръчна'),
+                ('Автоматична','Автоматична')
     )
+
     CAR_TYPES = (
-        ('SUV', 'SUV'),
-        ('Hatchback', 'Hatchback'),
-        ('Crossover', 'Crossover'),
-        ('Convertible', 'Convertible'),
-        ('Sedan', 'Sedan'),
-        ('Sports Car', 'Sports Car'),
-        ('Coupe', 'Coupe'),
-        ('Minivan', 'Minivan'),
-        ('Station Wagon', 'Station Wagon'),
-        ('Pickup Truck', 'Pickup Truck'),
+        ('Ван', 'Ван'),
+        ('Джип', 'Джип'),
+        ('Кабрио', 'Кабрио'),
+        ('Комби', 'Комби'),
+        ('Купе', 'Купе'),
+        ('Миниван', 'Миниван'),
+        ('Пикап', 'Пикап'),
+        ('Седан', 'Седан'),
+        ('Стреч лимузина', 'Стреч лимузина'),
+        ('Хечбек', 'Хечбек'),
     )
 
     transmission = models.CharField(max_length=50, choices=TRANSMISSION)    
