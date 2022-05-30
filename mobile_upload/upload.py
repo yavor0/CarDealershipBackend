@@ -1,14 +1,14 @@
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 from thefuzz import process
 from thefuzz import fuzz
-from selenium.webdriver.support.ui import Select
-
-
+import random
+import os
+#TODO: FIX NAMING
 print("------------------------------------------------------------------\n")
 
 
@@ -43,7 +43,33 @@ class MobileUploader():
     def fill_horse_power(self, horse_power):
         self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f9"]').send_keys(horse_power)
 
-    
+    def fill_transmission_type(self, transimission_type):
+        all_transmission_types = self.driver.find_element(by=By.XPATH, value='//*[@class="sw300new"][@name="f10"]')
+        dropdown_with_transmissions_types = Select(all_transmission_types)
+        dropdown_with_transmissions_types.select_by_value(transimission_type)
+
+    def fill_category(self, car_category):
+        all_categories = self.driver.find_element(by=By.XPATH, value='//*[@class="sw300new"][@name="f11"]')
+        dropdown_with_categories = Select(all_categories)
+        dropdown_with_categories.select_by_value(car_category)
+
+    def fill_price(self, price):
+        self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f12"]').send_keys(price)
+
+    def fill_year(self, year):
+        # ------------Select the month------------
+        all_months_element = self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f14"]')
+        all_months_names = all_months_element.text.split('\n')
+        random_month = random.choice(all_months_names)
+        dropdown_with_months = Select(all_months_element)
+        dropdown_with_months.select_by_value(random_month)
+        # --------------------------------------
+        
+        # ------------Select the year------------
+        all_years_element = self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f15"]')
+        dropdown_with_years = Select(all_years_element)
+        dropdown_with_years.select_by_value(str(year))
+        # --------------------------------------
 
     def run(self, car_make, car_model):
         self.driver.get("https://www.mobile.bg/pcgi/mobile.cgi?pubtype=1&act=1")
@@ -51,7 +77,10 @@ class MobileUploader():
         self.fill_car_model(my_car_model)
         self.fill_engine_type('Бензинов') # this will be fixed later
         self.fill_horse_power('123') # this will be fixed later
-
+        self.fill_transmission_type('Полуавтоматична') # this will be fixed later
+        self.fill_category("Ван") # this will be fixed later
+        self.fill_price(12333) # this will be fixed later
+        self.fill_year(2004) # this will be fixed later
 
 
 my_car_make = "Alfa Romeo"
