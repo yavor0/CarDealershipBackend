@@ -14,17 +14,18 @@ import time
 #TODO: FIX NAMING
 
 class MobileUploader():
-    def __init__(self):
+    def __init__(self, car):
         # ------------Only for development------------
         chrome_options = Options()
         chrome_options.add_experimental_option("detach", True)
-        chrome_options.add_argument(r"user-data-dir=C:\Users\Yavor\Desktop\CarDealershipBackend\mobile_upload\user_data")
+        chrome_options.add_argument(r"user-data-dir=C:\Users\Yavor\Desktop\CarDealershipBackend\dealership\mobile_upload\user_data")
         # -------------------------------------------
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
         
         self.dealership_location_region = 'София' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
         self.dealership_location_city = 'гр. София' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
         self.dealership_phone_number = '0878786309' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
+        self.car = car
 
     def fill_car_make(self, car_make):
         all_car_makes_element = self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f5"]')
@@ -101,34 +102,38 @@ class MobileUploader():
         for image_path in image_paths:
             self.driver.find_element_by_xpath('/html/body/div[1]/div[5]/div[3]/div/ul/div/input').send_keys(image_path)
 
-    def run(self, car_make, car_model):
+    def run(self):
         '''
         Harcodings will be fixed later
         '''
         self.driver.get("https://www.mobile.bg/pcgi/mobile.cgi?pubtype=1&act=1")
 
-        # ------------Stage 1------------
-        self.fill_car_make()
-        self.fill_car_model()
-        self.fill_engine_type('Бензинов') 
-        self.fill_horse_power('123')
-        self.fill_transmission_type('Полуавтоматична')
-        self.fill_category("Ван")
-        self.fill_price(12333)
-        self.fill_year(2004)
-        self.fill_mileage(100000)
+        # ------------Fill car details------------
+        self.fill_car_make(self.car.make)
+        self.fill_car_model(self.car.model)
+        self.fill_engine_type(self.car.engine_type) 
+        self.fill_horse_power(self.car.power)
+        self.fill_transmission_type(self.car.transmission)
+        self.fill_category(self.car.type)
+        self.fill_price(self.car.price)
+        self.fill_year(self.car.year)
+        self.fill_mileage(self.car.mileage)
+        # ----------------------------------------
+
+        # ------------Fill dealership details------------
         self.fill_location()
         self.fill_location()
         self.fill_phone_number()
-        # -------------------------------
+        # -----------------------------------------------
 
 
-        # ------------Stage 2------------
+        # ------------Fill car images------------
+        # self.driver.find_element(By.XPATH, '/html/body/div[1]/table[3]/tbody/tr/td/form/table[5]/tbody/tr/td/label/input').click()
         self.driver.execute_script("document.getElementById('pubButton').click()")
         # message_key = self.get_message_key()
         # print(message_key)
 
-        images = [r'C:\Users\Yavor\Desktop\main_shema.png']
-        self.fill_images(images)
+        # images = [r'C:\Users\Yavor\Desktop\main_shema.png']
+        # self.fill_images(images)
         # self.driver.find_element(By.XPATH, '//*[@id="mainholder"]/div[7]/a').click()
 
