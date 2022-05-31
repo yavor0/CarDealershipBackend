@@ -12,8 +12,6 @@ import random
 import os
 import time
 #TODO: FIX NAMING
-print("------------------------------------------------------------------\n")
-
 
 class MobileUploader():
     def __init__(self):
@@ -99,6 +97,10 @@ class MobileUploader():
     def get_message_key(self):
         return input("Enter message key: ")
 
+    def fill_images(self, image_paths):
+        for image_path in image_paths:
+            self.driver.find_element_by_xpath('/html/body/div[1]/div[5]/div[3]/div/ul/div/input').send_keys(image_path)
+
     def run(self, car_make, car_model):
         '''
         Harcodings will be fixed later
@@ -106,8 +108,8 @@ class MobileUploader():
         self.driver.get("https://www.mobile.bg/pcgi/mobile.cgi?pubtype=1&act=1")
 
         # ------------Stage 1------------
-        self.fill_car_make(my_car_make)
-        self.fill_car_model(my_car_model)
+        self.fill_car_make()
+        self.fill_car_model()
         self.fill_engine_type('Бензинов') 
         self.fill_horse_power('123')
         self.fill_transmission_type('Полуавтоматична')
@@ -122,14 +124,11 @@ class MobileUploader():
 
 
         # ------------Stage 2------------
-        # self.driver.execute_script("document.getElementById('pubButton').click()")
+        self.driver.execute_script("document.getElementById('pubButton').click()")
         # message_key = self.get_message_key()
         # print(message_key)
 
-my_car_make = "Alfa Romeo"
-my_car_model = "164"
+        images = [r'C:\Users\Yavor\Desktop\main_shema.png']
+        self.fill_images(images)
+        # self.driver.find_element(By.XPATH, '//*[@id="mainholder"]/div[7]/a').click()
 
-uploader = MobileUploader()
-uploader.run(my_car_make, my_car_model)
-
-print("\n------------------------------------------------------------------")
