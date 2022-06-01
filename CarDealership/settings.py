@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'dealership',
-    'debug_toolbar'
+    'debug_toolbar',
+    'django_object_actions'
 ]
 
 MIDDLEWARE = [
