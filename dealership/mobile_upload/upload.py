@@ -14,7 +14,7 @@ import time
 #TODO: FIX NAMING
 
 class MobileUploader():
-    def __init__(self, car):
+    def __init__(self):
         # ------------Only for development------------
         chrome_options = Options()
         chrome_options.add_experimental_option("detach", True)
@@ -25,7 +25,6 @@ class MobileUploader():
         self.dealership_location_region = 'София' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
         self.dealership_location_city = 'гр. София' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
         self.dealership_phone_number = '0878786309' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
-        self.car = car
 
     def fill_car_make(self, car_make):
         all_car_makes_element = self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f5"]')
@@ -102,22 +101,26 @@ class MobileUploader():
         for image_path in image_paths:
             self.driver.find_element_by_xpath('/html/body/div[1]/div[5]/div[3]/div/ul/div/input').send_keys(image_path)
 
-    def run(self):
+    def fill_descriptions(self, description):
+        self.driver.find_element(By.XPATH, '//*[@id="mainholder"]/table[3]/tbody/tr/td/form/table[4]/tbody/tr/td[1]/table/tbody/tr[2]/td/textarea').send_keys(description)
+
+    def run(self, car, car_images):
         '''
         Harcodings will be fixed later
         '''
         self.driver.get("https://www.mobile.bg/pcgi/mobile.cgi?pubtype=1&act=1")
 
         # ------------Fill car details------------
-        self.fill_car_make(self.car.make)
-        self.fill_car_model(self.car.model)
-        self.fill_engine_type(self.car.engine_type) 
-        self.fill_horse_power(self.car.power)
-        self.fill_transmission_type(self.car.transmission)
-        self.fill_category(self.car.type)
-        self.fill_price(self.car.price)
-        self.fill_year(self.car.year)
-        self.fill_mileage(self.car.mileage)
+        self.fill_car_make(car.make)
+        self.fill_car_model(car.model)
+        self.fill_engine_type(car.engine_type) 
+        self.fill_horse_power(car.power)
+        self.fill_transmission_type(car.transmission)
+        self.fill_category(car.type)
+        self.fill_price(car.price)
+        self.fill_year(car.year)
+        self.fill_mileage(car.mileage)
+        self.fill_descriptions(car.description)
         # ----------------------------------------
 
         # ------------Fill dealership details------------
@@ -129,11 +132,10 @@ class MobileUploader():
 
         # ------------Fill car images------------
         # self.driver.find_element(By.XPATH, '/html/body/div[1]/table[3]/tbody/tr/td/form/table[5]/tbody/tr/td/label/input').click()
-        self.driver.execute_script("document.getElementById('pubButton').click()")
+        # self.driver.execute_script("document.getElementById('pubButton').click()")
         # message_key = self.get_message_key()
         # print(message_key)
 
-        # images = [r'C:\Users\Yavor\Desktop\main_shema.png']
-        # self.fill_images(images)
+        # self.fill_images(car_images)
         # self.driver.find_element(By.XPATH, '//*[@id="mainholder"]/div[7]/a').click()
 
