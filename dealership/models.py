@@ -72,5 +72,7 @@ class CarEvaluation(CarModel):
     email = models.EmailField(max_length=254)
     phone = models.CharField(max_length=12)
     date_submitted = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='dealership/images')
+
     class Meta:
         ordering = ["-date_submitted"]
