@@ -24,10 +24,21 @@ class CarDetail(generics.RetrieveAPIView):
 
 class CarEvaluate(generics.CreateAPIView):
     serializer_class = CarEvaluationSerializer
-
+    def put(self, request, filename, format=None):
+            file_obj = request.FILES['file']
+            # do some stuff with uploaded file
+            return Response(status=204)
+            
     def create(self, request, *args, **kwargs):
+        file = request.data.get('file')
+        filename = str(file)
+        with open('snimki/' + filename, "wb+") as dest:
+            for chunk in file.chunks():
+                dest.write(chunk)
+            
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         # notify_owner(request.data)
