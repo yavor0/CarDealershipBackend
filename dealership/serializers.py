@@ -22,12 +22,12 @@ class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = ['id', 'make', 'model', 'mileage', 'price', 'year', 'power', 'fuel', 'description', 'date_added', 'images']
-        
+
 class CarEvaluationSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarEvaluation
         fields = ['id', 'email', 'phone', 'make', 'model', 'mileage', 'price', 'year', 'power', 'fuel', 'description']
-        
+
 
 
     # id = serializers.IntegerField()

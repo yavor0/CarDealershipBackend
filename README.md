@@ -12,4 +12,4 @@
  `/dealership/cars/<id>` - information for a specific car by its id
 
  # In development:
- `/dealership/evaluate` - add options for users to sell their cars to us
+ `/dealership/evaluate` - add options for users to sell their cars to us3

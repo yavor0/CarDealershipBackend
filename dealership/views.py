@@ -18,8 +18,10 @@ class CarDetail(generics.RetrieveAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
-# def notify_owner(data):
-#     send_mail(f'test email{0}', 'hello world', 'devemail500@gmail.com', ['targer'])
+def notify_owner(data):
+    send_mail(f'test email', 'hello world', 'devemail500@gmail.com', ['targer'])
+
+
 
 
 class CarEvaluate(generics.CreateAPIView):

@@ -9,23 +9,34 @@ class CarModel(models.Model):
     mileage = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(1)])
 
     TRANSMISSION = (
-                ('Manual','Manual'),
-                ('Automatic','Automatic')
-    )
-    CAR_TYPES = (
-        ('SUV', 'SUV'),
-        ('Hatchback', 'Hatchback'),
-        ('Crossover', 'Crossover'),
-        ('Convertible', 'Convertible'),
-        ('Sedan', 'Sedan'),
-        ('Sports Car', 'Sports Car'),
-        ('Coupe', 'Coupe'),
-        ('Minivan', 'Minivan'),
-        ('Station Wagon', 'Station Wagon'),
-        ('Pickup Truck', 'Pickup Truck'),
+                ('Ръчна','Ръчна'),
+                ('Автоматична','Автоматична'),
+                ('Полуавтоматична', 'Полуавтоматична')
     )
 
-    transmission = models.CharField(max_length=50, choices=TRANSMISSION)    
+    CAR_TYPES = (
+        ('Ван', 'Ван'),
+        ('Джип', 'Джип'),
+        ('Кабрио', 'Кабрио'),
+        ('Комби', 'Комби'),
+        ('Купе', 'Купе'),
+        ('Миниван', 'Миниван'),
+        ('Пикап', 'Пикап'),
+        ('Седан', 'Седан'),
+        ('Стреч лимузина', 'Стреч лимузина'),
+        ('Хечбек', 'Хечбек'),
+    )
+
+    ENGINE_TYPES = (
+        ('Бензинов', 'Бензинов'),
+        ('Дизелов', 'Дизелов'),
+        ('Електрически', 'Електрически'),
+        ('Хибриден', 'Хибриден')
+    )
+
+
+    transmission = models.CharField(max_length=50, choices=TRANSMISSION)
+    engine_type = models.CharField(max_length=50, choices=ENGINE_TYPES)
     type = models.CharField(max_length=50, choices=CAR_TYPES)
     YEAR_CHOICES = [(r,r) for r in range(1980, datetime.date.today().year+1)]
     year = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
