@@ -22,7 +22,7 @@ class CarImageInline(admin.TabularInline):
 @admin.register(models.Car)
 class CarAdmin(DjangoObjectActions, admin.ModelAdmin):
     def publish_this(self, request, obj):
-        images = [os.path.join(Path(os.getcwd()).parent, "media", Path(str(image.image))) for image in models.CarImage.objects.select_related().filter(Car=obj)]
+        images = [os.path.join(Path(os.getcwd()).parent, "CarDealershipBackend", "media", Path(str(image.image))) for image in models.CarImage.objects.select_related().filter(Car=obj)]
         # print(images)
         uploader = MobileUploader()
         uploader.run(obj, images)

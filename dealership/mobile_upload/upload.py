@@ -1,3 +1,4 @@
+from email.mime import image
 from django.db import close_old_connections
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -12,7 +13,7 @@ from thefuzz import fuzz
 import random
 import os
 import time
-#TODO: FIX NAMING
+
 
 class MobileUploader():
     def __init__(self):
@@ -23,9 +24,9 @@ class MobileUploader():
         # -------------------------------------------
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
         
-        self.dealership_location_region = 'София' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
-        self.dealership_location_city = 'гр. София' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
-        self.dealership_phone_number = '0878786309' # TODO: FIGURE OUT A BETTER IMPLEMENTATION THAN THAT
+        self.dealership_location_region = 'София'
+        self.dealership_location_city = 'гр. София'
+        self.dealership_phone_number = '0878786309'
 
     def fill_car_make(self, car_make):
         all_car_makes_element = self.driver.find_element(by=By.XPATH, value='//*[@class="sw145new"][@name="f5"]')
@@ -100,15 +101,14 @@ class MobileUploader():
 
     def fill_images(self, image_paths):
         for image_path in image_paths:
-            self.driver.find_element_by_xpath('/html/body/div[1]/div[5]/div[3]/div/ul/div/input').send_keys(image_path)
+            if not image_path.endswith(".png"):
+                self.driver.find_element_by_xpath('/html/body/div[1]/div[5]/div[3]/div/ul/div/input').send_keys(image_path)
 
     def fill_descriptions(self, description):
         self.driver.find_element(By.XPATH, '//*[@id="mainholder"]/table[3]/tbody/tr/td/form/table[4]/tbody/tr/td[1]/table/tbody/tr[2]/td/textarea').send_keys(description)
 
     def run(self, car, car_images):
-        '''
-        Harcodings will be fixed later
-        '''
+    
         self.driver.get("https://www.mobile.bg/pcgi/mobile.cgi?pubtype=1&act=1")
 
         # ------------Fill car details------------
@@ -121,7 +121,7 @@ class MobileUploader():
         self.fill_price(car.price)
         self.fill_year(car.year)
         self.fill_mileage(car.mileage)
-        self.fill_descriptions(car.description)
+        # self.fill_descriptions(car.description) <---------------------- fix for later
         # ----------------------------------------
 
         # ------------Fill dealership details------------
@@ -132,11 +132,12 @@ class MobileUploader():
 
 
         # ------------Fill car images------------
-        # self.driver.find_element(By.XPATH, '/html/body/div[1]/table[3]/tbody/tr/td/form/table[5]/tbody/tr/td/label/input').click()
-        # self.driver.execute_script("document.getElementById('pubButton').click()")
-        # message_key = self.get_message_key()
-        # print(message_key)
+        self.driver.execute_script("document.getElementById('pubButton').click()")
+        self.fill_images(car_images)
+        time.sleep(0.3) # precautionary wait
+        self.driver.find_element(By.XPATH, '/html/body/div[1]/div[7]/a').click()
 
-        # self.fill_images(car_images)
-        # self.driver.find_element(By.XPATH, '//*[@id="mainholder"]/div[7]/a').click()
 
+        # ------------Select type of listing and publish------------
+        self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[3]/div/div[2]/form/div[1]/label/input').click()
+        self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[4]/a').click()
